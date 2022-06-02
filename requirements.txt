@@ -1,0 +1,6 @@
+SpeechRecognition>=3.8.1
+pywin32>=304
+scikit-learn>=1.0.2
+playsound>=1.2.2
+pyfiglet>=0.8.post1
+Wikipedia-API>=0.5.4

@@ -1,0 +1,43 @@
+{
+  "hello": {
+    "morning": "sound_001.wav",
+    "day": "sound_002.wav",
+    "evening": "sound_003.wav",
+    "night": "sound_004.wav",
+    "default": "sound_005.wav"
+  },
+  "goodbye": {
+    "morning": "sound_006.wav",
+    "day": "sound_007.wav",
+    "evening": "sound_008.wav",
+    "night": "sound_009.wav",
+    "default": "sound_010.wav"
+  },
+  "search": {
+    "google": "sound_011.wav",
+    "wiki": "sound_012.wav",
+    "youtube": "sound_013.wav",
+    "wiki-not-find" : "sound_020.wav"
+  },
+  "translate": {
+    "en-ru": "sound_014.wav",
+    "ru-en": "sound_015.wav",
+    "open-tab": "sound_016.wav"
+  },
+  "weather": {
+    "today": "sound_017.wav",
+    "tomorrow": "sound_018.wav",
+    "open-tab": "sound_019.wav"
+  },
+  "other": {
+    "thanks": "sound_021.wav"
+  },
+  "errors": {
+    "40": {
+      "44": "error_044.wav"
+    },
+    "50": {
+      "54": "error_054.wav"
+    }
+  }
+}
