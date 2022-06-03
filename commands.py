@@ -10,7 +10,8 @@ def assistant_names():
 
 def other_words():
     return \
-        tuple(("пожалуйста", "прошу тебя", "прошу", "ага", " а ", "мне"))
+        tuple(("пожалуйста", "прошу тебя", "прошу", "ага", " а ", "мне",
+               "спасибо"))
 
 
 def get_commands():
@@ -147,7 +148,7 @@ def say_thanks(assistant, *args: tuple):
 
 
 def not_find(assistant, *args: tuple):
-    pass
+    pass  # assistant.say_sound('other', 'notfind')
 
 
 def search_youtube(assistant, *args: tuple):

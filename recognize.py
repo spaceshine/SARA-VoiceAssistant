@@ -1,40 +1,8 @@
-import speech_recognition  # распознавание пользовательской речи (Speech-To-Text)
+import speech_recognition
 import time
 import pyfiglet
 
 import commands
-
-
-def recognize_audio(recognizer, microphone, *args: tuple):
-    """
-    Запись и распознавание аудио
-    """
-    with microphone:
-        recognized_data = ""
-        recognizer.adjust_for_ambient_noise(microphone, duration=1)
-
-        try:
-            print("Listening...")
-            audio = recognizer.listen(microphone, 10)
-
-        except speech_recognition.WaitTimeoutError:
-            print("SARA can't hear you")
-            return
-
-        # использование online-распознавания через Google
-        try:
-            print("Started recognition...")
-            recognized_data = recognizer.recognize_google(audio, language="ru").lower()
-
-        except speech_recognition.UnknownValueError:
-            pass
-
-        # в случае проблем с доступом в Интернет происходит попытка
-        # использовать offline-распознавание через Vosk
-        except speech_recognition.RequestError:
-            print("Internet error")
-
-        return recognized_data
 
 
 def callback(recognizer, audio):
@@ -82,7 +50,7 @@ def callback(recognizer, audio):
         print("[log] Неизвестная ошибка, проверьте интернет!")
 
 
-def listen_background(microphone, recognizer):
+def listen(microphone, recognizer):
     global assistant
     with microphone as source:
         recognizer.adjust_for_ambient_noise(source)

@@ -4,16 +4,10 @@ import win32com.client as wincl
 
 
 class VoiceAssistant:
-    def __init__(self, ttsEngine):
-        """
-        Настройки голосового ассистента, включающие имя, пол, язык речи
-        """
-        self.name = ""
-        self.sex = ""
-        self.speech_language = ""
-        self.recognition_language = ""
-        self.ttsEngine = ttsEngine
+    def __init__(self, rate, voiceid):
         self.__isrunning = True
+        self.rate = rate
+        self.voiceid = voiceid
 
     def say(self, text_to_speech):
         """
@@ -21,15 +15,14 @@ class VoiceAssistant:
         :param text_to_speech: текст, который нужно преобразовать в речь
         """
         spk = wincl.Dispatch("SAPI.SpVoice")
-        spk.Voice = spk.GetVoices().Item(3)
-        spk.Rate = 2
+        spk.Voice = spk.GetVoices().Item(self.voiceid)
+        spk.Rate = self.rate
         spk.Speak(text_to_speech)
 
     @staticmethod
     def say_sound(cat: str, name: str):
         with open("voice.json", "r") as read_file:
             data = json.load(read_file)
-
         try:
             playsound(f"speech/{data[cat][name]}")
         except KeyError:
@@ -50,21 +43,3 @@ class VoiceAssistant:
 
     def assistant_quit(self):
         self.__isrunning = False
-
-
-def setup_assistant_voice(assistant):
-    """
-    Установка голоса по умолчанию (индекс может меняться в
-    зависимости от настроек операционной системы)
-    :param assistant: объект ассистента
-    """
-    voices = assistant.ttsEngine.getProperty("voices")
-
-    assistant.recognition_language = "ru-RU"
-    # Microsoft Irina Desktop - Russian
-    for voice in voices:
-        if voice.name == "Tatiana":
-            assistant.ttsEngine.setProperty("voice", voice.id)
-
-    rate = assistant.ttsEngine.getProperty('rate')
-    assistant.ttsEngine.setProperty('rate', rate - 50)

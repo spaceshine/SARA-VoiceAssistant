@@ -1,9 +1,12 @@
 import webbrowser
 import wikipediaapi  # поиск определений в Wikipedia
-import re
 
 
 def search_google(assistant, *args: tuple):
+    if not args:
+        assistant.error(54)
+        return
+
     chrome_path = "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
     webbrowser.register('google-chrome', None, webbrowser.BackgroundBrowser(chrome_path))
 
@@ -20,6 +23,10 @@ def crop_definition(text: str):
 
 
 def search_wiki(assistant, *args: tuple):
+    if not args:
+        assistant.error(54)
+        return
+
     chrome_path = "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
     webbrowser.register('google-chrome', None, webbrowser.BackgroundBrowser(chrome_path))
 
@@ -41,8 +48,3 @@ def search_wiki(assistant, *args: tuple):
         # открытие ссылки на поисковик в браузере в случае, если на Wikipedia не удалось найти ничего по запросу
         assistant.say_sound('search', 'wiki-not-find')
         search_google(assistant, *args)
-
-    # поскольку все ошибки предсказать сложно, то будет произведен отлов с последующим выводом без остановки программы
-    # except Exception:
-    #     assistant.error(54)
-    #     return

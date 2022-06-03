@@ -51,7 +51,7 @@ class SaraWeather:
     def today(self):
         res = json.loads(requests.get(f'https://api.weather.yandex.ru/v2/informers?lat={self.lat}&lon={self.lon}',
                                       headers={'X-Yandex-API-Key': self.__apikey}).text)
-        return f"Сегодня в {self.name} {self.condition_dict[res['fact']['condition']]}. " \
+        return f"Сейчас в {self.name} {self.condition_dict[res['fact']['condition']]}. " \
                f"{res['fact']['temp']} градусов."
 
     def closest(self):

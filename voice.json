@@ -30,7 +30,8 @@
     "open-tab": "sound_019.wav"
   },
   "other": {
-    "thanks": "sound_021.wav"
+    "thanks": "sound_021.wav",
+    "notfind": "sound_022.wav"
   },
   "errors": {
     "40": {
