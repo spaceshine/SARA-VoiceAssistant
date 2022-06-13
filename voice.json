@@ -29,6 +29,36 @@
     "tomorrow": "sound_018.wav",
     "open-tab": "sound_019.wav"
   },
+  "applications": {
+    "telegram": "sound_023.wav",
+    "spotify": "sound_024.wav",
+    "notepad": "sound_025.wav",
+    "docs": "sound_026.wav",
+    "calc": "sound_027.wav",
+    "discord": "sound_028.wav"
+  },
+  "system-interaction": {
+    "maximize-window": "sound_029.wav",
+    "minimize-window": "sound_030.wav",
+    "close-window": "sound_031.wav",
+    "play-pause": "sound_032.wav"
+  },
+  "countdown": {
+    "10": "sound_033.wav",
+    "9": "sound_034.wav",
+    "8": "sound_035.wav",
+    "7": "sound_036.wav",
+    "6": "sound_037.wav",
+    "5": "sound_038.wav",
+    "4": "sound_039.wav",
+    "3": "sound_040.wav",
+    "2": "sound_041.wav",
+    "1": "sound_042.wav",
+    "0": "sound_043.wav"
+  },
+  "timer": {
+    "end": "sound_044.wav"
+  },
   "other": {
     "thanks": "sound_021.wav",
     "notfind": "sound_022.wav"
@@ -38,7 +68,8 @@
       "44": "error_044.wav"
     },
     "50": {
-      "54": "error_054.wav"
+      "54": "error_054.wav",
+      "55": "error_055.wav"
     }
   }
 }

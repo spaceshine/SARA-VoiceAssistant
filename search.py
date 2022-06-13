@@ -48,3 +48,15 @@ def search_wiki(assistant, *args: tuple):
         # открытие ссылки на поисковик в браузере в случае, если на Wikipedia не удалось найти ничего по запросу
         assistant.say_sound('search', 'wiki-not-find')
         search_google(assistant, *args)
+
+
+def open_docs(assistant):
+    chrome_path = "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
+    webbrowser.register('google-chrome', None, webbrowser.BackgroundBrowser(chrome_path))
+
+    new_tab = webbrowser.get(using='google-chrome').open_new_tab(f"docs.google.com/document/u/0/?hl=ru")
+
+    if new_tab is None:
+        assistant.error(55)
+    else:
+        assistant.say_sound("applications", "docs")

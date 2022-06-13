@@ -24,6 +24,7 @@ class VoiceAssistant:
         with open("voice.json", "r") as read_file:
             data = json.load(read_file)
         try:
+            # print(f"speech/{data[cat][name]}")
             playsound(f"speech/{data[cat][name]}")
         except KeyError:
             print(f"[err] {cat}; {name}")

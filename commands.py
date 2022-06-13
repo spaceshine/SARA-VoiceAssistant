@@ -1,6 +1,11 @@
 import datetime as dt
+import subprocess
+import win32con
+import win32gui
+from pynput.keyboard import Controller, Key
 
 import search
+import voice_timers
 
 
 def assistant_names():
@@ -30,24 +35,42 @@ def get_commands():
                     "examples": ["загугли", "найди"],
                     "responses": search.search_google
                 },
-                "youtube-search": {
-                    "examples": ["видео", "найди видео"],
-                    "responses": search_youtube
-                },
                 "wikipedia-search": {
-                    "examples": ["найди на википедии", "википедия"],
+                    "examples": ["найди в википедии", "википедия"],
                     "responses": search.search_wiki
                 },
                 "weather_forecast": {
-                    "examples": ["прогноз погоды", "какая погода",
-                                 "погода"],
+                    "examples": ["прогноз погоды", "погода"],
                     "responses": get_weather_forecast
                 },
-                "translation": {
-                    "examples": ["выполни перевод", "переведи",
-                                 "перевод"],
-                    "responses": text_translate
+                "open-application": {
+                    "examples": ["открой", "запусти"],
+                    "responses": open_application
                 },
+                "minimize-window": {
+                    "examples": ["сверни", "сверни окно"],
+                    "responses": minimize_window
+                },
+                "maximize-window": {
+                    "examples": ["обратно", "разверни окно"],
+                    "responses": maximize_window
+                },
+                "close-window": {
+                    "examples": ["закрой", "закрой окно"],
+                    "responses": close_window
+                },
+                "pause-play": {
+                    "examples": ["пауза", "давай дальше", "стоп"],
+                    "responses": pause_play
+                },
+                "countdown": {
+                    "examples": ["считай", "отчёт", "обратный"],
+                    "responses": start_countdown
+                },
+                "timer": {
+                    "examples": ["таймер", "засеки"],
+                    "responses": voice_timers.timer
+                }
             },
             "failure_phrases": not_find
         }
@@ -86,7 +109,7 @@ def get_intent(request, vectorizer, classifier, classifier_probability):
     best_intent_probability = probabilities[index_of_best_intent]
 
     # при добавлении новых намерений стоит уменьшать этот показатель
-    if best_intent_probability > 0.157:
+    if best_intent_probability > 0.150:
         return best_intent
 
 
@@ -151,14 +174,6 @@ def not_find(assistant, *args: tuple):
     pass  # assistant.say_sound('other', 'notfind')
 
 
-def search_youtube(assistant, *args: tuple):
-    pass
-
-
-def text_translate(assistant, *args: tuple):
-    pass
-
-
 def list_in_list(a: tuple, b: tuple) -> bool:
     for i in a:
         if i in b:
@@ -170,5 +185,52 @@ def get_weather_forecast(assistant, *args: tuple):
     global weather
     if list_in_list(("сегодня", "сейчас"), args[0]):
         assistant.say(weather.today())
-    elif list_in_list(("завтра", "ближайшие", "ближайший"), args[0]):
+    elif list_in_list(("завтра", "ближайшие", "ближайший", "ближайшая", "ближайшую"), args[0]):
         assistant.say(weather.closest())
+
+
+def open_application(assistant, *args: tuple):
+    if list_in_list(("telegram", "телеграм", "телеграмм", "тг"), args[0]):
+        subprocess.Popen('"C:\\Users\\space\\AppData\\Roaming\\Telegram Desktop\\Telegram.exe"')
+        assistant.say_sound('applications', 'telegram')
+    elif list_in_list(("spotify", "спотифай"), args[0]):
+        subprocess.Popen('"C:\\Users\\space\\AppData\\Roaming\\Spotify\\Spotify.exe"')
+        assistant.say_sound('applications', 'spotify')
+    elif list_in_list(("блокнот", "текстовик"), args[0]):
+        subprocess.Popen('"C:\\Windows\\System32\\notepad.exe"')
+        assistant.say_sound('applications', 'notepad')
+    elif list_in_list(("calculator", "калькулятор"), args[0]):
+        subprocess.Popen('"C:\\Windows\\System32\\calc.exe"')
+        assistant.say_sound('applications', 'calc')
+    elif list_in_list(("discord", "дискорд", "дс"), args[0]):
+        subprocess.run('C:\\Users\\space\\AppData\\Local\\Discord\\Update.exe --processStart Discord.exe', shell=True)
+        assistant.say_sound('applications', 'discord')
+    elif list_in_list(("docs", "документ", "документы", "докс"), args[0]):
+        search.open_docs(assistant)
+
+
+def minimize_window(assistant, *args: tuple):
+    win32gui.ShowWindow(win32gui.GetForegroundWindow(), win32con.SW_MINIMIZE)
+
+
+def maximize_window(assistant, *args: tuple):
+    win32gui.ShowWindow(win32gui.GetForegroundWindow(), win32con.SW_NORMAL)
+
+
+def close_window(assistant, *args: tuple):
+    win32gui.PostMessage(win32gui.GetForegroundWindow(), win32con.WM_CLOSE, 0, 0)
+
+
+def pause_play(assistant, *args: tuple):
+    kb = Controller()
+    with kb.pressed(Key.cmd, Key.ctrl_l, Key.shift, Key.f24):
+        kb.release(Key.f24)
+        kb.release(Key.shift)
+        kb.release(Key.ctrl_l)
+        kb.release(Key.cmd)
+
+
+def start_countdown(assistant, *args: tuple):
+    # TODO: сделать разные start`ы;
+    # TODO: На данном этапе это будет неэффективно, тк распознавание будет работать "через раз".
+    voice_timers.countdown(assistant, start=10)

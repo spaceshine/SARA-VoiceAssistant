@@ -6,8 +6,8 @@ import commands
 
 
 def callback(recognizer, audio):
+    global assistant, nlu
     try:
-        global assistant, nlu
         voice_input = recognizer.recognize_google(audio, language="ru-RU").lower()
 
         print("Callback:", voice_input)
@@ -56,6 +56,6 @@ def listen(microphone, recognizer):
         recognizer.adjust_for_ambient_noise(source)
     recognizer.listen_in_background(microphone, callback)
 
-    pyfiglet.print_figlet("SARA  v 0. 1. 1", font='slant')
+    pyfiglet.print_figlet("SARA  v 0. 3. 0", font='slant')
     while assistant.isrunning():
         time.sleep(0.1)
