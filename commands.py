@@ -32,7 +32,7 @@ def get_commands():
                     "responses": play_quit
                 },
                 "google-search": {
-                    "examples": ["загугли", "найди"],
+                    "examples": ["загугли", "найди", "поиск"],
                     "responses": search.search_google
                 },
                 "wikipedia-search": {
